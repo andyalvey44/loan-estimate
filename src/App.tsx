@@ -1,7 +1,7 @@
-import HowItWorks from "@/pages/HowItWorks";
+import Course from "@/pages/Course";
 
 function App() {
-  return <HowItWorks />;
+  return <Course />;
 }
 
 export default App;
