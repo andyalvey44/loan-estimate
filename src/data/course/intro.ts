@@ -6,6 +6,13 @@ export const intro: Section = {
   eyebrow: "Introduction",
   title: "Understanding the Loan Estimate in the Mortgage Ecosystem",
   lead: "The Loan Estimate is your mortgage's \"nutrition label.\" Before you can compare offers or spot a bad deal, you need to know what the form is, why it exists, and how to approach reading it.",
+  estMinutes: 12,
+  objectives: [
+    "**Explain** what the Loan Estimate is and the role it plays in the mortgage process",
+    "**Describe** why the form exists and the regulation (TRID) that mandates it",
+    "**Identify** the timing protections the disclosure gives you as a borrower",
+    "**Apply** a consistent, professional approach to reviewing any Loan Estimate",
+  ],
   topics: [
     {
       id: "what-is-an-le",
@@ -62,7 +69,26 @@ export const intro: Section = {
           variant: "pro-tip",
           md: "The most expensive loan isn't always the worst deal, and the lowest rate isn't always the best. You need to analyze the complete picture — including how long you plan to keep the loan.",
         },
+        {
+          kind: "check",
+          question:
+            "A lender must provide the Loan Estimate within how long after receiving your application?",
+          options: [
+            { text: "Three business days", correct: true },
+            { text: "At the closing table", correct: false },
+            { text: "Ten business days", correct: false },
+            { text: "Thirty calendar days", correct: false },
+          ],
+          explanation:
+            "Under the TRID rule (**Regulation Z, 12 CFR §1026.37**), the lender must deliver the Loan Estimate within **three business days** of receiving your application. That early-disclosure requirement is exactly what gives you time to shop, compare, and catch problems *before* you're committed.",
+        },
       ],
     },
+  ],
+  keyTakeaways: [
+    "The Loan Estimate is a standardized, 3-page disclosure every lender must provide within 3 business days of application.",
+    "It exists because of the **TRID rule** (Regulation Z), created to make mortgage offers transparent and comparable.",
+    "Standardization is the whole point — it lets you compare lenders apples-to-apples and see what can change before closing.",
+    "Review every LE the same way: immediately, side-by-side with competitors, focused on **total cost**, not just the rate.",
   ],
 };

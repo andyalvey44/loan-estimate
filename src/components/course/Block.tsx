@@ -2,6 +2,7 @@ import type { Block } from "@/data/course/types";
 import { Markdown } from "./Markdown";
 import { Layer } from "./Layer";
 import { Callout } from "./Callout";
+import { KnowledgeCheck } from "./KnowledgeCheck";
 
 export function BlockView({ block }: { block: Block }) {
   switch (block.kind) {
@@ -18,6 +19,14 @@ export function BlockView({ block }: { block: Block }) {
         <Callout variant={block.variant} title={block.title}>
           <Markdown>{block.md}</Markdown>
         </Callout>
+      );
+    case "check":
+      return (
+        <KnowledgeCheck
+          question={block.question}
+          options={block.options}
+          explanation={block.explanation}
+        />
       );
   }
 }
