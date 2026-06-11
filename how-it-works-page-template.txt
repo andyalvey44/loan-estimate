@@ -1,0 +1,226 @@
+❯ write it as clean markdown block i can paste please
+
+import { LogoBar } from "@/components/BrandLogo";
+import { ChevronRight } from "lucide-react";
+
+export default function HowItWorks() {
+  const sections = [
+    "overview",
+    "prompt-library",
+    "creator-cards",
+    "generation-flow",
+    "output-structure",
+    "context-linking",
+  ];
+
+  const currentSection = "overview";
+
+  return (
+    <main className="min-h-screen bg-background text-foreground">
+      <LogoBar />
+
+      <div className="container mx-auto px-6 py-12">
+        <div className="grid grid-cols-4 gap-8">
+
+          {/* Sidebar Navigation */}
+          <aside className="col-span-1">
+            <nav className="sticky top-20 space-y-1 text-sm">
+              <div className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-4">
+                On this page
+              </div>
+              {sections.map((section) => (
+                <a
+                  key={section}
+                  href={`#${section}`}
+                  className={`block py-2 px-3 rounded-md transition-colors ${
+                    currentSection === section
+                      ? "bg-primary/10 text-primary font-medium"
+                      : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+                  }`}
+                >
+                  {section.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")}
+                </a>
+              ))}
+            </nav>
+          </aside>
+
+          {/* Main Content */}
+          <div className="col-span-3 space-y-16 max-w-3xl">
+
+            {/* Overview */}
+            <section id="overview" className="scroll-mt-20">
+              <h2 className="text-3xl font-bold mb-4">How TrainingCraft Works</h2>
+              <p className="text-muted-foreground leading-relaxed mb-6">
+                TrainingCraft generates training content through a deterministic, prompt-driven architecture. Instead of free-form AI output, every lesson is shaped by a library of reusable prompts. This ensures consistent, predictable output every time.
+              </p>
+              <p className="text-muted-foreground leading-relaxed">
+                The core flow is simple: You define how content should be generated (Prompt Library) → You create a lesson (Creator Card) → The system generates using your prompts → You review and export.
+              </p>
+            </section>
+
+            {/* Prompt Library */}
+            <section id="prompt-library" className="scroll-mt-20">
+              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                Prompt Library
+                <ChevronRight className="w-5 h-5 text-muted-foreground" />
+              </h2>
+              <p className="text-muted-foreground leading-relaxed mb-6">
+                The Prompt Library is a collection of reusable prompt cards. Each card contains the instructions that tell the AI how to generate a specific part of your lesson (learning objectives, key concepts, assessments, etc.).
+              </p>
+
+              <div className="bg-card border border-border rounded-lg p-6 mb-6">
+                <div className="text-sm font-medium text-muted-foreground mb-3">Example Prompt Card</div>
+                <pre className="text-xs overflow-x-auto bg-black/20 p-4 rounded text-white/80">
+{`Card: Learning Objectives
+Purpose: Generate 3-5 clear, measurable learning outcomes
+Input: Topic, industry, target audience
+Output: Bulleted list of objectives in SMART format
+Tone: Professional, specific, action-oriented
+Max Length: 200 characters per objective`}
+                </pre>
+              </div>
+
+              <p className="text-muted-foreground leading-relaxed">
+                When you update a prompt card, all future lesson generations use the new version. This allows you to refine your training output across all content without re-generating past lessons.
+              </p>
+            </section>
+
+            {/* Creator Cards */}
+            <section id="creator-cards" className="scroll-mt-20">
+              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                Creator Cards
+                <ChevronRight className="w-5 h-5 text-muted-foreground" />
+              </h2>
+              <p className="text-muted-foreground leading-relaxed mb-6">
+                A Creator Card is the form interface for generating one lesson. You provide:
+              </p>
+
+              <ul className="space-y-3 mb-6 text-muted-foreground">
+                <li className="flex gap-3">
+                  <span className="text-primary font-semibold flex-shrink-0">•</span>
+                  <span><strong>Title & Description:</strong> What the lesson is about</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-semibold flex-shrink-0">•</span>
+                  <span><strong>Source Material:</strong> URL, document text, or free-form content</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-semibold flex-shrink-0">•</span>
+                  <span><strong>Context Links:</strong> Optional compliance docs, style guides, or reference URLs</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-semibold flex-shrink-0">•</span>
+                  <span><strong>Tags:</strong> Metadata for organization and filtering</span>
+                </li>
+              </ul>
+
+              <p className="text-muted-foreground leading-relaxed">
+                When you click "Generate," the system takes this information and creates a complete lesson using the prompts from your Prompt Library.
+              </p>
+            </section>
+
+            {/* Generation Flow */}
+            <section id="generation-flow" className="scroll-mt-20">
+              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                Generation Flow
+                <ChevronRight className="w-5 h-5 text-muted-foreground" />
+              </h2>
+              <p className="text-muted-foreground leading-relaxed mb-6">
+                Here's what happens when you generate a lesson:
+              </p>
+
+              <div className="space-y-4">
+                {[
+                  { num: "1", title: "Client Payload", desc: "Your Creator Card data (title, description, source, context links) is bundled into a structured payload." },
+                  { num: "2", title: "API Request", desc: "The payload is sent to /api/generate with the corresponding prompt cards from your library." },
+                  { num: "3", title: "Context Assembly", desc: "The API server combines your source material with the context links (if provided) into the generation prompt." },
+                  { num: "4", title: "AI Generation", desc: "Claude AI generates each section of the lesson using the prompt instructions. One prompt for objectives, one for key concepts, etc." },
+                  { num: "5", title: "Structured Output", desc: "The API returns a JSON object with all sections. Format is always the same—only the content varies." },
+                  { num: "6", title: "Client Display", desc: "The generated lesson is displayed in the preview. You can edit inline, regenerate, or approve." },
+                ].map((step) => (
+                  <div key={step.num} className="flex gap-4">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center font-semibold text-primary text-sm">
+                      {step.num}
+                    </div>
+                    <div>
+                      <div className="font-semibold text-sm mb-1">{step.title}</div>
+                      <p className="text-muted-foreground text-sm">{step.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Output Structure */}
+            <section id="output-structure" className="scroll-mt-20">
+              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                Output Structure
+                <ChevronRight className="w-5 h-5 text-muted-foreground" />
+              </h2>
+              <p className="text-muted-foreground leading-relaxed mb-6">
+                Every generated lesson follows the same structure. This deterministic output is what makes TrainingCraft different from free-form AI generation.
+              </p>
+
+              <div className="bg-card border border-border rounded-lg p-6 mb-6">
+                <div className="text-sm font-medium text-muted-foreground mb-3">Lesson JSON Schema</div>
+                <pre className="text-xs overflow-x-auto bg-black/20 p-4 rounded text-white/80 whitespace-pre-wrap break-words">
+{`{
+  "title": string,
+  "learning_objectives": string[],
+  "sections": [
+    {
+      "heading": string,
+      "content": string
+    }
+  ],
+  "tags": string[],
+  "generated_at": timestamp
+}`}
+                </pre>
+              </div>
+
+              <p className="text-muted-foreground leading-relaxed">
+                Because the schema is consistent, you can reliably export, validate, and integrate lessons with your LMS or content system.
+              </p>
+            </section>
+
+            {/* Context Linking */}
+            <section id="context-linking" className="scroll-mt-20">
+              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                Context Linking
+                <ChevronRight className="w-5 h-5 text-muted-foreground" />
+              </h2>
+              <p className="text-muted-foreground leading-relaxed mb-6">
+                When creating a lesson, you can link external documents as context. These are passed to the AI during generation, allowing the output to be grounded in specific source material.
+              </p>
+
+              <ul className="space-y-3 mb-6 text-muted-foreground">
+                <li className="flex gap-3">
+                  <span className="text-primary font-semibold flex-shrink-0">•</span>
+                  <span><strong>Compliance Link:</strong> Regulatory document, compliance checklist, or legal standard</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-semibold flex-shrink-0">•</span>
+                  <span><strong>Context Link:</strong> Reference material, background article, or source documentation</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-semibold flex-shrink-0">•</span>
+                  <span><strong>Language Style Link:</strong> Style guide, tone reference, or terminology document</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary font-semibold flex-shrink-0">•</span>
+                  <span><strong>Reference URL:</strong> Additional context or supplementary reading</span>
+                </li>
+              </ul>
+
+              <p className="text-muted-foreground leading-relaxed">
+                The system retrieves these URLs during generation and includes their content in the prompt context. This ensures your generated lessons stay aligned with your requirements.
+              </p>
+            </section>
+
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}
