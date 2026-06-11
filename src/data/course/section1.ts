@@ -6,6 +6,13 @@ export const section1: Section = {
   eyebrow: "Section 1",
   title: "The Header — Foundational Loan Information",
   lead: "The top of Page 1 contains critical identifying information that sets the foundation for everything else in the document.",
+  estMinutes: 10,
+  objectives: [
+    "**Locate** the Date Issued and **count** the deadlines it triggers (intent-to-proceed and earliest closing)",
+    "**Verify** that applicant names and the property address are complete and exactly correct",
+    "**Calculate** loan-to-value (LTV) from sale price and loan amount, and **explain** why the 80% threshold matters",
+    "**Flag** header-level errors that can delay or derail a closing",
+  ],
   topics: [
     {
       id: "date-issued",
@@ -53,6 +60,22 @@ export const section1: Section = {
             "- Earliest closing date: Thursday, January 18 (7 business days after receipt)",
             "- Intent-to-proceed deadline: generally Monday, January 22 (10 business days)",
           ].join("\n"),
+        },
+        {
+          kind: "check",
+          question:
+            "Why does the Date Issued matter beyond simply being a timestamp?",
+          options: [
+            {
+              text: "It starts the intent-to-proceed and earliest-closing deadlines and sets the baseline for measuring changed circumstances",
+              correct: true,
+            },
+            { text: "It determines your interest rate", correct: false },
+            { text: "It's the date your first mortgage payment is due", correct: false },
+            { text: "It has no practical effect on the transaction", correct: false },
+          ],
+          explanation:
+            "The Date Issued is the clock-starter: it begins the 10-business-day window to indicate intent to proceed, anchors the earliest-closing math, and establishes the baseline lenders measure **changed circumstances** against. A timestamp with teeth.",
         },
       ],
     },
@@ -172,7 +195,26 @@ export const section1: Section = {
           variant: "pro-tip",
           md: "For purchases, if you're close to the 80% LTV threshold, consider whether you can bring slightly more cash to closing to avoid PMI. The monthly savings often justify the extra upfront cash.",
         },
+        {
+          kind: "check",
+          question:
+            "A buyer is purchasing a $400,000 home with a $360,000 loan. What is the LTV — and does it require PMI?",
+          options: [
+            { text: "90% — PMI required", correct: true },
+            { text: "80% — no PMI", correct: false },
+            { text: "90% — no PMI", correct: false },
+            { text: "111% — PMI required", correct: false },
+          ],
+          explanation:
+            "LTV = loan ÷ price × 100 = $360,000 ÷ $400,000 = **90%**. Anything above 80% LTV generally triggers PMI on a conventional loan, so this borrower would pay it. Increasing the down payment to bring the loan to $320,000 (80%) would avoid PMI entirely.",
+        },
       ],
     },
+  ],
+  keyTakeaways: [
+    "The **Date Issued** starts the clock — it triggers the intent-to-proceed and earliest-closing deadlines and is the baseline for any later changes.",
+    "Names must match government IDs exactly and every borrower must be listed; the property address must be precise — header errors stall closings.",
+    "**LTV = loan ÷ price.** It drives PMI, your rate, and program eligibility — and 80% is the line that decides whether you pay PMI.",
+    "Treat the header as the foundation: if these numbers are wrong, everything downstream on the form is wrong too.",
   ],
 };
