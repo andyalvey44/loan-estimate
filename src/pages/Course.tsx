@@ -56,6 +56,15 @@ export default function Course() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
+      {/* Decorative demo ribbon */}
+      <div className="flex items-center justify-center gap-5 border-b border-border/50 bg-background pb-3.5 pt-7">
+        <span className="h-px w-8 bg-gradient-to-r from-transparent to-amber-200/50 sm:w-14" />
+        <span className="bg-gradient-to-r from-amber-300 via-amber-100 to-amber-300 bg-clip-text pl-[0.42em] text-[14px] font-light uppercase tracking-[0.42em] text-transparent">
+          Courseware Design Demo
+        </span>
+        <span className="h-px w-8 bg-gradient-to-l from-transparent to-amber-200/50 sm:w-14" />
+      </div>
+
       <LogoBar />
 
       {/* Course hero */}

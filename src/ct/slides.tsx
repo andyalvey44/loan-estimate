@@ -50,9 +50,17 @@ function EyebrowRow({
 function Title({ slide }: RenderProps<TitleSlide>) {
   return (
     <div
-      className="flex h-full flex-col items-center justify-center px-[7vw] text-center"
+      className="relative flex h-full flex-col items-center justify-center px-[7vw] text-center"
       style={{ background: palette.ink, color: palette.paper }}
     >
+      {/* Decorative demo masthead, dropped down from the top */}
+      <div className="pointer-events-none absolute inset-x-0 top-14 flex items-center justify-center gap-4">
+        <span className="h-px w-10 bg-gradient-to-r from-transparent to-white/50 sm:w-14" />
+        <span className="pl-[0.45em] text-[12px] font-light uppercase tracking-[0.45em] text-white">
+          Courseware Design Demo
+        </span>
+        <span className="h-px w-10 bg-gradient-to-l from-transparent to-white/50 sm:w-14" />
+      </div>
       <img
         src="/Seal_of_Connecticut.svg"
         alt="State of Connecticut seal"

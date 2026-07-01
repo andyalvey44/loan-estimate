@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Courseware Slide Deck — Demo Export</title>
+  <!-- Portable demo: React + Tailwind via CDN, no build step. Open in any browser. -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style> html, body, #root { height: 100%; margin: 0; } </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    // --- palette (blue theme drawn from the Connecticut state seal) ---
+    const P = {
+      ink: "#0d1c2f", inkPanel: "#16304c",
+      paper: "#eef4fb", paperPanel: "#d9e6f4",
+      accent: "#0e5fa6", accentSoft: "#8fc0ea", danger: "#c2453b",
+    };
+    const SEAL = "https://loan-estimate.vercel.app/Seal_of_Connecticut.svg";
+    const EYE = "text-xs font-semibold uppercase tracking-[0.2em]";
+
+    // --- a few representative slides ---
+    const slides = [
+      { kind: "title", id: "title",
+        eyebrow: "CONTINUING EDUCATION",
+        title: "Connecticut Mortgage Compliance",
+        subtitle: "A 10-minute essentials course for licensed loan originators",
+        author: "CT Abusive Home Loan Lending Practices Act" },
+      { kind: "content", id: "prohibited",
+        eyebrow: "THE ESSENTIALS", label: "PROHIBITED FEATURES",
+        lead: "High-cost loans cannot be structured with any of these:",
+        bullets: [
+          ["Call provisions", "no acceleration at the lender's sole discretion"],
+          ["Balloon payments", "none on terms under seven years"],
+          ["Negative amortization", "the balance can never grow while paying"],
+          ["Rate increase on default", "no penalty rate after a missed payment"],
+        ],
+        note: "These map to the predatory-lending playbook the Act was written to stop." },
+      { kind: "comparison", id: "benefit",
+        eyebrow: "THE ESSENTIALS", label: "TANGIBLE NET BENEFIT",
+        lead: "Same paperwork. Completely different for the borrower.",
+        left: { title: "A flip", tone: "ink", items: ["New fees, little else changes", "Rate and payment roughly the same", "Benefit runs to the originator"] },
+        right: { title: "A real refinance", tone: "accent", items: ["Lower rate, payment, or term", "Debt consolidation or stability", "Eliminates a balloon or penalty"] },
+        note: "If you can't name the benefit, you can't originate the loan." },
+      { kind: "check", id: "check-all",
+        eyebrow: "KNOWLEDGE CHECK",
+        question: "Which practice is prohibited on ALL Connecticut home loans — not just high-cost ones?",
+        choices: [
+          ["A", "Repeatedly refinancing with no tangible net benefit (flipping)"],
+          ["B", "Charging a rate above the prime rate"],
+          ["C", "Requiring private mortgage insurance"],
+          ["D", "Offering a 30-year fixed mortgage"],
+        ],
+        answer: "A",
+        explanation: "Loan flipping is barred for every home loan under §36a-746e. The other three are ordinary, lawful features when properly disclosed." },
+      { kind: "completion", id: "done",
+        eyebrow: "COURSE COMPLETE", title: "You've got the essentials.",
+        subtitle: "Spot it. Disclose it. Document it.",
+        lines: ["Identify a high-cost loan on either trigger.", "Know the prohibited terms and the penalty ladder.", "Name the benefit behind every refinance."],
+        author: "Connecticut Mortgage Compliance — Essentials" },
+    ];
+
+    function EyebrowRow({ left, right }) {
+      return (
+        <div className="flex items-center justify-between">
+          <span className={EYE} style={{ color: "#7c8a99" }}>{left}</span>
+          <span className={EYE} style={{ color: P.accent }}>{right}</span>
+        </div>
+      );
+    }
+
+    function Title({ s }) {
+      return (
+        <div className="relative flex h-full flex-col items-center justify-center px-[7vw] text-center" style={{ background: P.ink, color: P.paper }}>
+          <div className="pointer-events-none absolute inset-x-0 top-14 flex items-center justify-center gap-4">
+            <span className="h-px w-10 sm:w-14" style={{ background: "linear-gradient(to right, transparent, rgba(255,255,255,0.5))" }} />
+            <span className="pl-[0.45em] text-[12px] font-light uppercase tracking-[0.45em] text-white">Courseware Design Demo</span>
+            <span className="h-px w-10 sm:w-14" style={{ background: "linear-gradient(to left, transparent, rgba(255,255,255,0.5))" }} />
+          </div>
+          <img src={SEAL} alt="State of Connecticut seal" className="mb-8 h-28 w-auto" style={{ filter: "drop-shadow(0 6px 20px rgba(0,0,0,0.45))" }} />
+          <div className={EYE + " mb-6"} style={{ color: P.accentSoft }}>{s.eyebrow}</div>
+          <h1 className="max-w-4xl text-5xl font-bold tracking-tight md:text-6xl">{s.title}</h1>
+          <p className="mt-5 text-lg" style={{ color: "#c3cfdd" }}>{s.subtitle}</p>
+          <div className="my-8 h-px w-40" style={{ background: "#33465c" }} />
+          <p className="text-sm" style={{ color: "#8b9bb0" }}>{s.author}</p>
+        </div>
+      );
+    }
+
+    function Content({ s }) {
+      return (
+        <div className="h-full overflow-y-auto px-[7vw] pt-[6vh] pb-28" style={{ background: P.paper, color: P.ink }}>
+          <EyebrowRow left={s.eyebrow} right={s.label} />
+          <p className="mt-8 max-w-2xl text-xl font-medium leading-relaxed">{s.lead}</p>
+          <ul className="mt-8 max-w-2xl space-y-4">
+            {s.bullets.map(([t, d], i) => (
+              <li key={i} className="flex gap-3 text-[15px] leading-relaxed">
+                <span className="mt-0.5" style={{ color: P.accent }}>—</span>
+                <span><span className="font-semibold">{t}</span> — <span style={{ color: "#3a4744" }}>{d}</span></span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-10 max-w-2xl text-[15px] italic" style={{ color: "#5b6763" }}>{s.note}</p>
+        </div>
+      );
+    }
+
+    function Column({ col }) {
+      const tone = col.tone === "ink" ? { background: P.ink, color: P.paper, label: P.accentSoft }
+        : col.tone === "accent" ? { background: P.accent, color: P.paper, label: "#cfe4f6" }
+        : { background: P.paperPanel, color: P.ink, label: "#6b7873" };
+      return (
+        <div className="flex-1 rounded-2xl p-7" style={{ background: tone.background, color: tone.color }}>
+          <div className={EYE + " mb-5"} style={{ color: tone.label }}>{col.title}</div>
+          <ul className="space-y-3">
+            {col.items.map((it, i) => (
+              <li key={i} className="border-b pb-3 text-sm leading-relaxed last:border-0 last:pb-0" style={{ borderColor: "rgba(128,128,128,0.18)" }}>{it}</li>
+            ))}
+          </ul>
+        </div>
+      );
+    }
+
+    function Comparison({ s }) {
+      return (
+        <div className="h-full overflow-y-auto px-[7vw] pt-[6vh] pb-28" style={{ background: P.paper, color: P.ink }}>
+          <EyebrowRow left={s.eyebrow} right={s.label} />
+          <p className="mt-8 max-w-2xl text-xl font-medium leading-relaxed">{s.lead}</p>
+          <div className="mt-8 flex max-w-4xl flex-col gap-5 md:flex-row">
+            <Column col={s.left} /><Column col={s.right} />
+          </div>
+          <p className="mt-8 max-w-2xl text-[15px] italic" style={{ color: "#5b6763" }}>{s.note}</p>
+        </div>
+      );
+    }
+
+    function Check({ s, answer, onAnswer }) {
+      const answered = Boolean(answer);
+      const correct = answer === s.answer;
+      return (
+        <div className="flex h-full flex-col" style={{ background: P.ink }}>
+          <div className="px-[7vw] pt-[6vh] pb-8" style={{ background: P.paper }}>
+            <div className={EYE + " mb-4"} style={{ color: P.accent }}>{s.eyebrow}</div>
+            <h2 className="max-w-3xl text-2xl font-bold leading-snug md:text-3xl" style={{ color: P.ink }}>{s.question}</h2>
+          </div>
+          <div className="flex-1 overflow-y-auto px-[7vw] pt-10 pb-28">
+            <div className="mx-auto max-w-4xl space-y-3">
+              {s.choices.map(([k, t]) => {
+                const isSel = answer === k, isAns = k === s.answer;
+                let border = "transparent", opacity = 1;
+                if (answered) { if (isAns) border = P.accent; else if (isSel) border = P.danger; else opacity = 0.5; }
+                return (
+                  <button key={k} disabled={answered} onClick={() => onAnswer(s.id, k)}
+                    className="flex w-full items-center gap-4 rounded-xl border-2 px-6 py-4 text-left transition-all"
+                    style={{ borderColor: border, background: P.paperPanel, opacity }}>
+                    <span className="text-sm font-bold" style={{ color: P.accent }}>{k}</span>
+                    <span className="flex-1 text-sm" style={{ color: P.ink }}>{t}</span>
+                    {answered && isAns ? <span style={{ color: P.accent }}>✓</span> : null}
+                    {answered && isSel && !isAns ? <span style={{ color: P.danger }}>✕</span> : null}
+                  </button>
+                );
+              })}
+              {answered ? (
+                <div className="mt-6 rounded-xl border-l-4 p-5 text-sm leading-relaxed"
+                  style={{ borderColor: correct ? P.accent : P.danger, background: P.inkPanel, color: "#d7dad5" }}>
+                  <div className={EYE + " mb-2"} style={{ color: correct ? P.accentSoft : "#e79a93" }}>{correct ? "Correct" : "Not quite"}</div>
+                  {s.explanation}
+                </div>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function Completion({ s }) {
+      return (
+        <div className="flex h-full flex-col items-center justify-center px-[7vw] text-center" style={{ background: P.ink, color: P.paper }}>
+          <img src={SEAL} alt="State of Connecticut seal" className="mb-7 h-20 w-auto" style={{ filter: "drop-shadow(0 6px 20px rgba(0,0,0,0.45))" }} />
+          <div className={EYE + " mb-6"} style={{ color: P.accentSoft }}>{s.eyebrow}</div>
+          <h1 className="max-w-3xl text-4xl font-bold tracking-tight md:text-5xl">{s.title}</h1>
+          <p className="mt-4 text-lg" style={{ color: "#c3cfdd" }}>{s.subtitle}</p>
+          <div className="my-8 h-px w-40" style={{ background: "#33465c" }} />
+          <div className="space-y-2">{s.lines.map((l) => <p key={l} className="text-[15px]" style={{ color: "#cdd7e2" }}>{l}</p>)}</div>
+          <p className="mt-8 text-sm font-medium" style={{ color: P.accentSoft }}>{s.author}</p>
+        </div>
+      );
+    }
+
+    function Deck() {
+      const [i, setI] = useState(0);
+      const [dir, setDir] = useState(1);
+      const [answers, setAnswers] = useState({});
+      const s = slides[i];
+      const total = slides.length;
+      const ready = s.kind !== "check" || Boolean(answers[s.id]);
+      const go = (d) => setI((v) => { const n = v + d; if (n < 0 || n >= total) return v; setDir(d); return n; });
+
+      useEffect(() => {
+        const onKey = (e) => {
+          if (e.key === "ArrowRight" && ready && i < total - 1) go(1);
+          if (e.key === "ArrowLeft" && i > 0) go(-1);
+        };
+        window.addEventListener("keydown", onKey);
+        return () => window.removeEventListener("keydown", onKey);
+      });
+
+      const view = s.kind === "title" ? <Title s={s} />
+        : s.kind === "content" ? <Content s={s} />
+        : s.kind === "comparison" ? <Comparison s={s} />
+        : s.kind === "check" ? <Check s={s} answer={answers[s.id]} onAnswer={(id, k) => setAnswers((a) => ({ ...a, [id]: k }))} />
+        : <Completion s={s} />;
+
+      return (
+        <div className="fixed inset-0 overflow-hidden" style={{ background: P.ink }}>
+          <div className="absolute inset-x-0 top-0 z-20 h-1.5" style={{ background: "#000" }}>
+            <div className="h-full transition-all duration-500" style={{ width: (i / (total - 1)) * 100 + "%", background: P.accent }} />
+          </div>
+          <div key={i} className="h-full" style={{ animation: (dir >= 0 ? "inR" : "inL") + " .3s ease" }}>{view}</div>
+          {i > 0 ? (
+            <button onClick={() => go(-1)} className="absolute bottom-6 left-6 z-20 rounded-lg px-5 py-2.5 text-sm font-semibold shadow-sm" style={{ background: P.paper, color: P.ink }}>← Back</button>
+          ) : null}
+          <div className="absolute bottom-6 right-6 z-20 flex items-center gap-4">
+            {!ready ? <span className="hidden text-xs sm:inline" style={{ color: "#8b9bb0" }}>Select an answer to continue</span> : null}
+            {i < total - 1 ? (
+              <button onClick={() => go(1)} disabled={!ready} className="rounded-lg px-6 py-2.5 text-sm font-semibold shadow-sm" style={{ background: P.accent, color: P.paper, opacity: ready ? 1 : 0.4 }}>
+                {s.kind === "title" ? "Begin course" : "Next"} →
+              </button>
+            ) : (
+              <button onClick={() => { setAnswers({}); setDir(-1); setI(0); }} className="rounded-lg px-5 py-2.5 text-sm font-semibold shadow-sm" style={{ background: P.paper, color: P.ink }}>Start over</button>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    const css = document.createElement("style");
+    css.textContent = "@keyframes inR{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:none}}@keyframes inL{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:none}}";
+    document.head.appendChild(css);
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<Deck />);
+  </script>
+</body>
+</html>
