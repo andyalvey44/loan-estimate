@@ -12,8 +12,8 @@ export const slides: Slide[] = [
     kind: "title",
     eyebrow: "CONTINUING EDUCATION",
     title: "Connecticut Mortgage Compliance",
-    subtitle: "A 10-minute essentials course for licensed loan originators",
-    author: "CT Abusive Home Loan Lending Practices Act",
+    subtitle: "Connecticut Abusive Home Loan Lending Practices Act (§36a-746)",
+    author: "A 10-minute essentials course for licensed loan originators",
   },
   {
     id: "survey",

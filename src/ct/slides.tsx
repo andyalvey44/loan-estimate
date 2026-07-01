@@ -77,7 +77,7 @@ function Title({ slide }: RenderProps<TitleSlide>) {
       </p>
       <div className="my-8 h-px w-40" style={{ background: "#33465c" }} />
       {slide.author ? (
-        <p className="text-sm" style={{ color: "#8b9bb0" }}>
+        <p className="text-base" style={{ color: "#8b9bb0" }}>
           {slide.author}
         </p>
       ) : null}
